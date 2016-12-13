@@ -1,15 +1,12 @@
-//Programming Assignment 3
-//Dr. Pounds
-//Grayson Wyker
 
 CC = g++
 CFLAGS = -g 
 COPTFLAGS = 
 LIBFLAGS = -lglut -lGLU -lGL -lm
-HEADERS = prototype.h
+HEADERS = prototypes.h
 OBJECTS = display.o menu.o
 
-all : pristine house clean squeaky
+all : pristine house clean
 
 house : main.o $(OBJECTS)
 	$(CC) main.o $(OBJECTS) -o house $(LIBFLAGS)
