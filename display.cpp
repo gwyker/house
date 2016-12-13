@@ -1,8 +1,7 @@
 #include "prototypes.h"
 
-void display(void)
-{
-    struct house faces[7];
+void display(void) {
+    //struct house faces[7];
 
     float *M;
     int i, j;
@@ -17,16 +16,24 @@ void display(void)
 
     /* Draw a coordinate axis */
 
-    if (DRAWAXIS) drawAxes(5);
-    if (DRAWSPHERE) drawSphere();
+    if (axisOn) drawAxes(5);
+    if (fillOn) drawFill();
+    if (signOn) drawSign();
 
     glFlush();
     glutSwapBuffers();
 
 }
 
-void drawAxes(int length)
-{   
+void drawFill() {
+
+}
+
+void drawSign() {
+    
+}
+
+void drawAxes(int length) {
     int i, len;
 
     // Set up some character arrays for axis labels
@@ -91,15 +98,4 @@ void drawAxes(int length)
     glPopMatrix();
 }
 
-void refresh(){
-    display();
-}
 
-void reshape (int w, int h)
-{
-    glViewport (0, 0, (GLsizei) w, (GLsizei) h); 
-    glMatrixMode (GL_PROJECTION);
-    glLoadIdentity ();
-    glFrustum (-1.0, 1.0, -1.0, 1.0, 1.5, 20.0);
-    glMatrixMode (GL_MODELVIEW);
-}

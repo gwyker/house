@@ -1,55 +1,54 @@
 #include "prototypes.h"
 
+int winWidth = 400;
+int winHeight = 400;
+
 void myGlutInit(int argc, char** argv){
 
 	glutInit(&argc,argv);
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(winWidth,winHeight);
 	glutInitWindowPosition(0,0);
-	glutCreateWindow("You're Too SLOOOooooOOoOOOWWwW");
+	glutCreateWindow("See Rock City");
 
 }
 
-void myinit()
-{
+void myInit() {
     glClearColor(0.0, 0.0, 0.0, 1.0);
-
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glMatrixMode(GL_MODELVIEW);
 }
 
-void keyboard( unsigned char key, int x, int y )
-{ 
+void keyboard( unsigned char key, int x, int y ) {
     if ( key == 'q' || key == 'Q')
     	exit(0);
-	if (key == 's') //stop animation
+	//if (key == 's') //stop animation
 		//
-	if (key == 'r') //return house to original position/size
+	//if (key == 'r') //return house to original position/size
 		//	
-	if (key == 'R') //reset house AND reset camera
+	//if (key == 'R') //reset house AND reset camera
 		//capital R
-	if (key == 'pgup') //camera moves closer to house
+	//if (key == 'pgup') //camera moves closer to house
 		//USE GLUTSPECIALFUNC
-	if (key == 'pgdown') //camera moves further from house (still in view)
+	//if (key == 'pgdown') //camera moves further from house (still in view)
 		//USE GLUTSPECIALFUNC
 }
 
-void system(int msg) { //Contains quit and reset
-	switch (msg) {
-        case 1: //reset
-            //
-            break;
-        case 2: //quit
-            exit(0);
-            break;
-    }
-    glutPostRedisplay();
+void reshape (int w, int h) {
+    glViewport (0, 0, (GLsizei) w, (GLsizei) h); 
+    glMatrixMode (GL_PROJECTION);
+    glLoadIdentity ();
+    glFrustum (-1.0, 1.0, -1.0, 1.0, 1.5, 20.0);
+    glMatrixMode (GL_MODELVIEW);
 }
 
-int main(int argc, char** argv)
-{
+void refresh() {
+    display();
+}
+
+int main(int argc, char** argv) {
 	/*myGlutInit(argc,argv);
 	myinit(); 
 	viewportInit();
@@ -68,7 +67,7 @@ int main(int argc, char** argv)
     glutInitWindowSize (500, 500); 
     glutInitWindowPosition (100, 100);
     glutCreateWindow (argv[0]);
-    init();
+    myInit();
     glutDisplayFunc(display); 
     glutReshapeFunc(reshape);
 

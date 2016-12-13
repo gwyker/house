@@ -1,5 +1,12 @@
 #include "prototypes.h"
 
+int viewMode = 1;
+int axisOn = 1;
+int fillOn = 1;
+int signOn = 1;
+int customX, customY;
+
+
 void switchView (int msg) { //Switches between views
 	switch (msg) {
 		case 1: //Perspective
@@ -11,9 +18,9 @@ void switchView (int msg) { //Switches between views
 		case 3: //Custom
 			viewMode = 3;
 			//Choose custom settings
-			cout << "Enter 1st parameter: "
+			cout << "Enter 1st parameter: ";
 			cin >> customX;
-			cout << "Enter 2nd parameter: "
+			cout << "Enter 2nd parameter: ";
 			cin >> customY;
 			break;
 	}
@@ -56,7 +63,21 @@ void showSign (int msg) { //Shows "Hello World!"" on roof
 	glutPostRedisplay();
 }
 
+void control(int msg) { //Contains quit and reset
+	switch (msg) {
+        case 1: //reset
+            //
+            break;
+        case 2: //quit
+            exit(0);
+            break;
+    }
+    glutPostRedisplay();
+}
+
 void setupMenu () {
+	int view, axis, fill, sign, menu;
+
 	view = glutCreateMenu(switchView);
     glutAddMenuEntry("Perspective", 1);
     glutAddMenuEntry("Orthographic", 2);
@@ -74,7 +95,7 @@ void setupMenu () {
     glutAddMenuEntry("On", 1);
     glutAddMenuEntry("Off", 2);
  
-    menu = glutCreateMenu(system);
+    menu = glutCreateMenu(control);
     glutAddSubMenu("View", view);
     glutAddSubMenu("Axes", axis);
     glutAddSubMenu("Fill", fill);
