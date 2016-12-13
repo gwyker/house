@@ -11,6 +11,10 @@ void switchView (int msg) { //Switches between views
 		case 3: //Custom
 			viewMode = 3;
 			//Choose custom settings
+			cout << "Enter 1st parameter: "
+			cin >> customX;
+			cout << "Enter 2nd parameter: "
+			cin >> customY;
 			break;
 	}
 	glutPostRedisplay();

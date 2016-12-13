@@ -2,8 +2,6 @@
 
 void display(void)
 {
-    const int DIMENSION=4;
-
     struct house faces[7];
 
     float *M;
