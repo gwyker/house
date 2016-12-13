@@ -72,17 +72,50 @@ void drawHouse() {
 
     faces4[4].color.red = 1.0; faces4[4].color.green = 0.0; faces4[4].color.blue = 1.0; //magenta
 
-    for (int i = 0;i < 5;i++) {
-        if (fillOn)
-            glBegin(GL_POLYGON);
-        else
-            glBegin(GL_LINE_LOOP);
-        glColor3f(faces4[i].color.red, faces4[i].color.green, faces4[i].color.blue);
-        glVertex3i(faces4[i].point[0].x, faces4[i].point[0].y, faces4[i].point[0].z);
-        glVertex3i(faces4[i].point[1].x, faces4[i].point[1].y, faces4[i].point[1].z);
-        glVertex3i(faces4[i].point[2].x, faces4[i].point[2].y, faces4[i].point[2].z);
-        glVertex3i(faces4[i].point[3].x, faces4[i].point[3].y, faces4[i].point[3].z);
-        glEnd();
+    //front pentagon
+    faces5[0].point[0].x = 10; faces5[0].point[0].y = -5; faces5[0].point[0].z = -5; faces5[0].point[0].w = 1;
+    faces5[0].point[1].x = 10; faces5[0].point[1].y = 5; faces5[0].point[1].z = -5; faces5[0].point[1].w = 1;
+    faces5[0].point[2].x = 10; faces5[0].point[2].y = 5; faces5[0].point[2].z = 5; faces5[0].point[2].w = 1;
+    faces5[0].point[3].x = 10; faces5[0].point[3].y = 0; faces5[0].point[3].z = 8; faces5[0].point[3].w = 1;
+    faces5[0].point[4].x = 10; faces5[0].point[4].y = -5; faces5[0].point[4].z = 5; faces5[0].point[4].w = 1;
+
+    faces5[0].color.red = 1.0; faces5[0].color.green = 1.0; faces5[0].color.blue = 0.0; //yellow
+
+    //rear pentagon
+    faces5[1].point[0].x = -10; faces5[1].point[0].y = -5; faces5[1].point[0].z = -5; faces5[1].point[0].w = 1;
+    faces5[1].point[1].x = -10; faces5[1].point[1].y = 5; faces5[1].point[1].z = -5; faces5[1].point[1].w = 1;
+    faces5[1].point[2].x = -10; faces5[1].point[2].y = 5; faces5[1].point[2].z = 5; faces5[1].point[2].w = 1;
+    faces5[1].point[3].x = -10; faces5[1].point[3].y = 0; faces5[1].point[3].z = 8; faces5[1].point[3].w = 1;
+    faces5[1].point[4].x = -10; faces5[1].point[4].y = -5; faces5[1].point[4].z = 5; faces5[1].point[4].w = 1;
+
+    faces5[1].color.red = 1.0; faces5[1].color.green = 1.0; faces5[1].color.blue = 1.0; //white
+
+    for (int i = 0;i < 7;i++) {
+        if (i < 5) {
+            if (fillOn)
+                glBegin(GL_POLYGON);
+            else
+                glBegin(GL_LINE_LOOP);
+            glColor3f(faces4[i].color.red, faces4[i].color.green, faces4[i].color.blue);
+            glVertex3i(faces4[i].point[0].x, faces4[i].point[0].y, faces4[i].point[0].z);
+            glVertex3i(faces4[i].point[1].x, faces4[i].point[1].y, faces4[i].point[1].z);
+            glVertex3i(faces4[i].point[2].x, faces4[i].point[2].y, faces4[i].point[2].z);
+            glVertex3i(faces4[i].point[3].x, faces4[i].point[3].y, faces4[i].point[3].z);
+            glEnd();
+        }
+        else {
+            if (fillOn)
+                glBegin(GL_POLYGON);
+            else
+                glBegin(GL_LINE_LOOP);
+            glColor3f(faces5[i-5].color.red, faces5[i-5].color.green, faces5[i-5].color.blue);
+            glVertex3i(faces5[i-5].point[0].x, faces5[i-5].point[0].y, faces5[i-5].point[0].z);
+            glVertex3i(faces5[i-5].point[1].x, faces5[i-5].point[1].y, faces5[i-5].point[1].z);
+            glVertex3i(faces5[i-5].point[2].x, faces5[i-5].point[2].y, faces5[i-5].point[2].z);
+            glVertex3i(faces5[i-5].point[3].x, faces5[i-5].point[3].y, faces5[i-5].point[3].z);
+            glVertex3i(faces5[i-5].point[4].x, faces5[i-5].point[4].y, faces5[i-5].point[4].z);
+            glEnd();
+        }
     }
 }
 
