@@ -10,11 +10,13 @@ void myGlutInit(int argc, char** argv){
 	glutInitWindowSize(winWidth,winHeight);
 	glutInitWindowPosition(0,0);
 	glutCreateWindow("See Rock City");
-
 }
 
 void myInit() {
     glClearColor(0.0, 0.0, 0.0, 1.0);
+    glClearDepth(1.0); //set depth
+	glEnable(GL_DEPTH_TEST); //enable z-buffer
+	glDepthFunc(GL_LEQUAL); //depth test mode
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -40,7 +42,7 @@ void reshape (int w, int h) {
     glViewport (0, 0, (GLsizei) w, (GLsizei) h); 
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity ();
-    glFrustum (-1.0, 1.0, -1.0, 1.0, 1.5, 20.0);
+    glFrustum (-1.0, 1.0, -1.0, 1.0, 1.5, 40.0);
     glMatrixMode (GL_MODELVIEW);
 }
 
@@ -62,11 +64,7 @@ int main(int argc, char** argv) {
 
 	int menu, axis, sphere;
 
-    glutInit(&argc, argv);
-    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
-    glutInitWindowSize (500, 500); 
-    glutInitWindowPosition (100, 100);
-    glutCreateWindow (argv[0]);
+    myGlutInit(argc, argv);
     myInit();
     glutDisplayFunc(display); 
     glutReshapeFunc(reshape);
