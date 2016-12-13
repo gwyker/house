@@ -24,6 +24,7 @@ void switchView (int msg) { //Switches between views
 			cin >> customY;
 			break;
 	}
+	cout << "viewmode = " << viewMode << endl;
 	glutPostRedisplay();
 }
 

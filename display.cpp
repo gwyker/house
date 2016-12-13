@@ -38,11 +38,15 @@ void drawHouse() {
     faces4[0].point[2].x = -10; faces4[0].point[2].y = 5; faces4[0].point[2].z = -5; faces4[0].point[2].w = 1;
     faces4[0].point[3].x = -10; faces4[0].point[3].y = -5; faces4[0].point[3].z = -5; faces4[0].point[3].w = 1;
 
+    faces4[0].color.red = 1.0; faces4[0].color.green = 0.0; faces4[0].color.blue = 0.0; //red
+
     //right wall
     faces4[1].point[0].x = 10; faces4[1].point[0].y = 5; faces4[1].point[0].z = -5; faces4[1].point[0].w = 1;
     faces4[1].point[1].x = -10; faces4[1].point[1].y = 5; faces4[1].point[1].z = -5; faces4[1].point[1].w = 1;
     faces4[1].point[2].x = -10; faces4[1].point[2].y = 5; faces4[1].point[2].z = 5; faces4[1].point[2].w = 1;
     faces4[1].point[3].x = 10; faces4[1].point[3].y = 5; faces4[1].point[3].z = 5; faces4[1].point[3].w = 1;
+
+    faces4[1].color.red = 0.0; faces4[1].color.green = 0.0; faces4[1].color.blue = 1.0; //blue
 
     //right roof
     faces4[2].point[0].x = 10; faces4[2].point[0].y = 0; faces4[2].point[0].z = 8; faces4[2].point[0].w = 1;
@@ -50,11 +54,15 @@ void drawHouse() {
     faces4[2].point[2].x = -10; faces4[2].point[2].y = 5; faces4[2].point[2].z = 5; faces4[2].point[2].w = 1;
     faces4[2].point[3].x = -10; faces4[2].point[3].y = 0; faces4[2].point[3].z = 8; faces4[2].point[3].w = 1;
 
+    faces4[2].color.red = 0.0; faces4[2].color.green = 1.0; faces4[2].color.blue = 0.0; //green
+
     //left roof
     faces4[3].point[0].x = 10; faces4[3].point[0].y = -5; faces4[3].point[0].z = 5; faces4[3].point[0].w = 1;
     faces4[3].point[1].x = 10; faces4[3].point[1].y = 0; faces4[3].point[1].z = 8; faces4[3].point[1].w = 1;
     faces4[3].point[2].x = -10; faces4[3].point[2].y = 0; faces4[3].point[2].z = 8; faces4[3].point[2].w = 1;
     faces4[3].point[3].x = -10; faces4[3].point[3].y = -5; faces4[3].point[3].z = 5; faces4[3].point[3].w = 1;
+
+    faces4[3].color.red = 0.0; faces4[3].color.green = 1.0; faces4[3].color.blue = 1.0; //cyan
 
     //left wall
     faces4[4].point[0].x = 10; faces4[4].point[0].y = -5; faces4[4].point[0].z = -5; faces4[4].point[0].w = 1;
@@ -62,8 +70,14 @@ void drawHouse() {
     faces4[4].point[2].x = -10; faces4[4].point[2].y = -5; faces4[4].point[2].z = 5; faces4[4].point[2].w = 1;
     faces4[4].point[3].x = 10; faces4[4].point[3].y = -5; faces4[4].point[3].z = 5; faces4[4].point[3].w = 1;
 
+    faces4[4].color.red = 1.0; faces4[4].color.green = 0.0; faces4[4].color.blue = 1.0; //magenta
+
     for (int i = 0;i < 5;i++) {
-        glBegin(GL_LINE_LOOP);
+        if (fillOn)
+            glBegin(GL_POLYGON);
+        else
+            glBegin(GL_LINE_LOOP);
+        glColor3f(faces4[i].color.red, faces4[i].color.green, faces4[i].color.blue);
         glVertex3i(faces4[i].point[0].x, faces4[i].point[0].y, faces4[i].point[0].z);
         glVertex3i(faces4[i].point[1].x, faces4[i].point[1].y, faces4[i].point[1].z);
         glVertex3i(faces4[i].point[2].x, faces4[i].point[2].y, faces4[i].point[2].z);
