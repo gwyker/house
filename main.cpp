@@ -26,6 +26,8 @@ void myInit() {
 void keyboard( unsigned char key, int x, int y ) {
     if ( key == 'q' || key == 'Q')
     	exit(0);
+    if ( key == 'f' || key == 'F') //DEBUG
+    	fillOn = 1 - fillOn;
 	//if (key == 's') //stop animation
 		//
 	//if (key == 'r') //return house to original position/size

@@ -19,8 +19,7 @@ void display(void) {
 
     drawHouse();
 
-    if (axisOn) drawAxes(5);
-    if (fillOn) drawFill();
+    if (axisOn) drawAxes(15);
     if (signOn) drawSign();
 
     glFlush();
@@ -117,10 +116,6 @@ void drawHouse() {
             glEnd();
         }
     }
-}
-
-void drawFill() {
-
 }
 
 void drawSign() {

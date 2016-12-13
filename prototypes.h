@@ -27,7 +27,6 @@ void display(void);
 void drawAxes(int length);
 void refresh();
 void reshape (int w, int h);
-void drawFill();
 void drawSign();
 void drawHouse();
 
