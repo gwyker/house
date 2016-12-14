@@ -16,7 +16,7 @@ extern int winWidth, winHeight;
 extern int axisOn, fillOn, signOn;
 extern int viewMode;
 extern float customLeft, customRight, customBottom, customTop, customNear, customFar;
-extern float angle, spin;
+extern float angleX, spinX, angleY, spinY, angleZ, spinZ;
 extern float zoom;
 
 //Debug
@@ -36,6 +36,7 @@ void drawSign();
 void drawHouse();
 void changeView();
 void spinHouse();
+void changeSpin(int x, int y, bool pos);
 void drawCurrentView();
 
 typedef struct vertex {

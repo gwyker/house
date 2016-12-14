@@ -30,19 +30,11 @@ void mouse(int button, int state, int x, int y)
     switch (button) {
         case GLUT_LEFT_BUTTON:
             if (state == GLUT_DOWN)
-            {
-                spin += 1.0;
-                if (spin > 10.0) spin = 10.0;
-                glutIdleFunc(spinHouse);
-            }
+                changeSpin(x, y, true);
             break;
         case GLUT_RIGHT_BUTTON:
             if (state == GLUT_DOWN)
-            {
-                spin -= 1.0;
-                if (spin < -10.0) spin = -10.0;
-                glutIdleFunc(spinHouse);
-            }
+                changeSpin(x, y, false);
             break;
         default:
             break;
@@ -55,15 +47,25 @@ void keyboard( unsigned char key, int x, int y ) {
     if ( key == 'f') //DEBUG
     	fillOn = 1 - fillOn;
     if (key == 's') //stop animation
-	spin = 0.0;
+	spinX = 0.0;
+  spinY = 0.0;
+  spinZ = 0.0;
     if (key == 'r') {//return house to original position/size
-	angle = 0.0;
-	spin = 0.0;
+  angleX = 0.0;
+  spinX = 0.0;
+  angleY = 0.0;
+  spinY = 0.0;
+  angleZ = 0.0;
+  spinZ = 0.0;
 	}
     if (key == 'R') { //reset house AND reset camera
 	zoom = 1.0;
-	angle = 0.0;
-	spin = 0.0;
+	angleX = 0.0;
+	spinX = 0.0;
+  angleY = 0.0;
+  spinY = 0.0;
+  angleZ = 0.0;
+  spinZ = 0.0;
 	}
     if ( key == 'j')
     	xT -= 0.5; cout << "x = " << xT << endl;
@@ -116,6 +118,7 @@ int main(int argc, char** argv) {
     glutMouseFunc(mouse);
     glutKeyboardFunc(keyboard);
     glutSpecialFunc(specialKeyboard);
+    glutIdleFunc(spinHouse);
 
     setupMenu();
 

@@ -76,8 +76,12 @@ void control(int msg) { //Contains quit and reset
 	switch (msg) {
         case 1: //reset
             zoom = 1.0;
-	    angle = 0.0;
-	    spin = 0.0;
+	    	angleX = 0.0;
+			spinX = 0.0;
+  			angleY = 0.0;
+  			spinY = 0.0;
+  			angleZ = 0.0;
+  			spinZ = 0.0;
             break;
         case 2: //quit
             exit(0);

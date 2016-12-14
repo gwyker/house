@@ -1,7 +1,11 @@
 #include "prototypes.h"
 
-float spin = 0;
-float angle = 0;
+float spinX = 0;
+float angleX = 0;
+float spinY = 0;
+float angleY = 0;
+float spinZ = 0;
+float angleZ = 0;
 
 float customLeft = -1.0;
 float customRight = 1.0;
@@ -28,7 +32,9 @@ void display(void) {
     gluLookAt (18.0, 15.0, 6.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     
     glPushMatrix();
-    glRotatef(angle, 0.0, 1.0, 0.0);
+    glRotatef(angleX, 1.0, 0.0, 0.0);
+    glRotatef(angleY, 0.0, 1.0, 0.0);
+    glRotatef(angleZ, 0.0, 0.0, 1.0);
     drawHouse();
     if (signOn) drawSign();
     glPopMatrix();
@@ -44,11 +50,48 @@ void display(void) {
 
 }
 
-void spinHouse(void)
+void spinHouse() {
+    angleX += spinX;
+    if (angleX > 360.0)
+        angleX -= 360.0;
+    angleY += spinY;
+    if (angleY > 360.0)
+        angleY -= 360.0;
+    angleZ += spinZ;
+    if (angleZ > 360.0)
+        angleZ -= 360.0;
+    glutPostRedisplay();
+}
+
+void changeSpin(int x, int y, bool pos)
 {
-    angle += spin;
-    if (angle > 360.0)
-    angle -= 360.0;
+    int port[4];
+    glGetIntegerv(GL_VIEWPORT, port);
+
+    if (x < (port[2] / 2)) {
+        if (pos) {
+            spinX += 1.0;
+            if (spinX > 10.0)
+                spinX = 10.0;
+        }
+        else {
+            spinX -= 1.0;
+            if (spinX < -10.0)
+                spinX = -10.0;
+        }
+    }
+    else if (x > (port[2] / 2)) {
+        if (pos) {
+            spinY += 1.0;
+            if (spinY > 10.0)
+                spinY = 10.0;
+        }
+        else {
+            spinY -= 1.0;
+            if (spinY < -10.0)
+                spinY = -10.0;
+        }
+    }
     glutPostRedisplay();
 }
 
@@ -238,7 +281,7 @@ void drawSign() {
 
     glPushMatrix();
     glColor3f(0.0,1.0,1.0);
-    glTranslatef(5.5 + xT, 2.8 + yT, 5.2 + zT);
+    glTranslatef(5.5 + xT, 2.8 + yT, 5.2 + zT); //debugging coordinates to find best location
     glRotatef(135.0 + 10, 1.0, 0.0, 0.0);
     glRotatef(180.0, 0.0, 1.0, 0.0);
     glScalef(0.03,0.03,0.03);
