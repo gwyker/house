@@ -75,7 +75,9 @@ void showSign (int msg) { //Shows "Hello World!"" on roof
 void control(int msg) { //Contains quit and reset
 	switch (msg) {
         case 1: //reset
-            //
+            zoom = 1.0;
+	    angle = 0.0;
+	    spin = 0.0;
             break;
         case 2: //quit
             exit(0);

@@ -195,7 +195,7 @@ void drawCurrentView() { //Draws current viewmode in top right corner
    glTranslatef(vPort[2] - 230, vPort[3] - 50, 0);
    //glRotatef(135.0 + 10, 1.0, 0.0, 0.0);
    //glRotatef(180.0, 0.0, 1.0, 0.0);
-   glScalef(0.3*zoom,0.3*zoom,0.3*zoom);
+   glScalef(0.3,0.3,0.3);
    switch (viewMode) {
    	case 1:
    		len = (int) strlen(messageP);
@@ -241,7 +241,7 @@ void drawSign() {
     glTranslatef(5.5 + xT, 2.8 + yT, 5.2 + zT);
     glRotatef(135.0 + 10, 1.0, 0.0, 0.0);
     glRotatef(180.0, 0.0, 1.0, 0.0);
-    glScalef(0.03*zoom,0.03*zoom,0.03*zoom);
+    glScalef(0.03,0.03,0.03);
     len = (int) strlen(message1);
     for (i = 0; i < len; i++) {
         glutStrokeCharacter(font, message1[i]);
@@ -254,7 +254,7 @@ void drawSign() {
     glTranslatef(5.5 + xT, 2.8 + yT + 2.0, 5.2 + zT - 2.0);
     glRotatef(135.0 + 7, 1.0, 0.0, 0.0);
     glRotatef(180.0, 0.0, 1.0, 0.0);
-    glScalef(0.03*zoom,0.03*zoom,0.03*zoom);
+    glScalef(0.03,0.03,0.03);
     len = (int) strlen(message2);
     for (i = 0; i < len; i++) {
         glutStrokeCharacter(font, message2[i]);
