@@ -63,33 +63,97 @@ void spinHouse() {
     glutPostRedisplay();
 }
 
-void changeSpin(int x, int y, bool pos)
-{
+int lineCompare(int x, int y, bool isLeft) {
+
+    //returns 1 for above, 2 for below, 0 for on line
+    int port[4];
+    glGetIntegerv(GL_VIEWPORT, port);
+    float slope, yLine;
+    //true is left-to-center line, false is right-to-center line
+    if (isLeft) {
+        slope = ((float)port[3] / 2.0) / ((float)port[2] / 2.0);
+        //y=mx+b
+        yLine = slope * x;
+        if (y > yLine)
+            return 1;
+        else if (y < yLine)
+            return 2;
+        else
+            return 0;
+    }
+    else {
+        slope = ((float)port[3] / 2.0) / ((float)port[2] / -2.0);
+        //y=mx+b
+        yLine = slope * x + port[3];
+        if (y > yLine)
+            return 1;
+        else if (y < yLine)
+            return 2;
+        else
+            return 0;
+    }
+}
+
+void changeSpin(int x, int y, bool pos) {
     int port[4];
     glGetIntegerv(GL_VIEWPORT, port);
 
-    if (x < (port[2] / 2)) {
-        if (pos) {
-            spinX += 1.0;
-            if (spinX > 10.0)
-                spinX = 10.0;
+    int lineResult;
+
+    if (x < (port[2] / 2)) { //left side of viewport
+        lineResult = lineCompare(x, port[3] - y, true); //true is left line
+        cout << "lineresult is: " << lineResult << endl;
+        if (lineResult == 1) { //left and above the line, spin Y
+            if (pos) {
+                spinY += 1.0;
+                if (spinY > 10.0)
+                    spinY = 10.0;
+            }
+            else {
+                spinY -= 1.0;
+                if (spinY < -10.0)
+                    spinY = -10.0;
+            }
         }
-        else {
-            spinX -= 1.0;
-            if (spinX < -10.0)
-                spinX = -10.0;
+        else if (lineResult == 2) { //left and below the line, spin Z
+            if (pos) {
+                spinZ += 1.0;
+                if (spinZ > 10.0)
+                    spinZ = 10.0;
+            }
+            else {
+                spinZ -= 1.0;
+                if (spinZ < -10.0)
+                    spinZ = -10.0;
+            }
         }
     }
-    else if (x > (port[2] / 2)) {
-        if (pos) {
-            spinY += 1.0;
-            if (spinY > 10.0)
-                spinY = 10.0;
+    else if (x > (port[2] / 2)) { //right side of viewport
+        lineResult = lineCompare(x, port[3] - y, false); //false is right line
+        cout << "lineresult is: " << lineResult << endl;
+        if (lineResult == 1) { //right and above the line, spin X
+            if (pos) {
+                spinX += 1.0;
+                if (spinX > 10.0)
+                    spinX = 10.0;
+            }
+            else {
+                spinX -= 1.0;
+                if (spinX < -10.0)
+                    spinX = -10.0;
+            }
         }
-        else {
-            spinY -= 1.0;
-            if (spinY < -10.0)
-                spinY = -10.0;
+        else if (lineResult == 2) { //right and below the line, spin Z
+            if (pos) {
+                spinZ += 1.0;
+                if (spinZ > 10.0)
+                    spinZ = 10.0;
+            }
+            else {
+                spinZ -= 1.0;
+                if (spinZ < -10.0)
+                    spinZ = -10.0;
+            }
         }
     }
     glutPostRedisplay();
@@ -245,7 +309,7 @@ void drawCurrentView() { //Draws current viewmode in top right corner
    		for (i = 0; i < len; i++) {
       			glutStrokeCharacter(font, messageP[i]);
   		}
-  		cout << "drawing perspective\n";
+  		//cout << "drawing perspective\n";
    		break;
    	case 2:
    		len = (int) strlen(messageO);

@@ -38,6 +38,7 @@ void changeView();
 void spinHouse();
 void changeSpin(int x, int y, bool pos);
 void drawCurrentView();
+int lineCompare(int x, int y, bool isLeft);
 
 typedef struct vertex {
     float x;
