@@ -2,8 +2,8 @@
 
 int viewMode = 1;
 int axisOn = 1;
-int fillOn = 1;
-int signOn = 1;
+int fillOn = 0;
+int signOn = 0;
 int customX, customY;
 
 
@@ -114,7 +114,7 @@ void setupMenu () {
     glutAddSubMenu("View", view);
     glutAddSubMenu("Axes", axis);
     glutAddSubMenu("Fill", fill);
-    glutAddSubMenu("See Rock City", sign);
+    glutAddSubMenu("Sign", sign);
     glutAddMenuEntry("Reset", 1);
     glutAddMenuEntry("Quit", 2);
 
