@@ -2,6 +2,12 @@
 
 int winWidth = 800;
 int winHeight = 800;
+float zoom = 1.0;
+
+//Debug
+float xT = 0.0;
+float yT = 0.0;
+float zT = 0.0;
 
 void myGlutInit(int argc, char** argv){
 
@@ -23,38 +29,73 @@ void myInit() {
     glMatrixMode(GL_MODELVIEW);
 }
 
+void mouse(int button, int state, int x, int y) 
+{
+    switch (button) {
+        case GLUT_LEFT_BUTTON:
+            if (state == GLUT_DOWN)
+            {
+                spin += 1.0;
+                if (spin > 10.0) spin = 10.0;
+                glutIdleFunc(spinHouse);
+            }
+            break;
+        case GLUT_RIGHT_BUTTON:
+            if (state == GLUT_DOWN)
+            {
+                spin -= 1.0;
+                if (spin < -10.0) spin = -10.0;
+                glutIdleFunc(spinHouse);
+            }
+            break;
+        default:
+            break;
+    }
+}
+
 void keyboard( unsigned char key, int x, int y ) {
-    if ( key == 'q' || key == 'Q')
+    if ( key == 'q')
     	exit(0);
-    if ( key == 'f' || key == 'F') //DEBUG
+    if ( key == 'f') //DEBUG
     	fillOn = 1 - fillOn;
-	//if (key == 's') //stop animation
-		//
-	//if (key == 'r') //return house to original position/size
-		//	
-	//if (key == 'R') //reset house AND reset camera
-		//capital R
-	//if (key == 'pgup') //camera moves closer to house
-		//USE GLUTSPECIALFUNC
-	//if (key == 'pgdown') //camera moves further from house (still in view)
-		//USE GLUTSPECIALFUNC
+    if (key == 's') //stop animation
+	spin = 0.0;
+    if (key == 'r') {//return house to original position/size
+	angle = 0.0;
+	spin = 0.0;
+	}
+    if (key == 'R') { //reset house AND reset camera
+	zoom = 1.0;
+	angle = 0.0;
+	spin = 0.0;
+	}
+    if ( key == 'j')
+    	xT -= 0.5; cout << "x = " << xT << endl;
+    if ( key == 'k')
+    	yT -= 0.5; cout << "y = " << yT << endl;
+    if ( key == 'l')
+    	zT -= 0.5; cout << "z = " << zT << endl;
+    if ( key == 'u')
+    	xT += 0.5; cout << "x = " << xT << endl;
+    if ( key == 'i')
+    	yT += 0.5; cout << "y = " << yT << endl;
+    if ( key == 'o')
+    	zT += 0.5; cout << "z = " << zT << endl;
+
+}
+
+void specialKeyboard(int key, int x, int y) {
+    if ( key == GLUT_KEY_PAGE_UP )
+    	{zoom -= 0.1; cout << "zoom = " << zoom << endl;}
+    if ( key == GLUT_KEY_PAGE_DOWN )
+    	{zoom += 0.1; cout << "zoom = " << zoom << endl;}
 }
 
 void reshape (int w, int h) {
     glViewport(0, 0, (GLsizei) w, (GLsizei) h); 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    if (viewMode == 1) {
-   		glFrustum(-1.0, 1.0, -1.0, 1.0, 1.5, 40.0);
-   		cout << "reshape: viewmode = " << viewMode << endl;
-   		cout << "reshape: using Frustum" << endl;
-   	}
-   	else {
-   		//glOrtho(-1.0, 1.0, -1.0, 1.0, 1.5, 40.0);
-   		glOrtho(-(float)w/h, (float)w/h, -1.0, 1.0, 1.5, 40.0);
-   		cout << "reshape: viewmode = " << viewMode << endl;
-   		cout << "reshape: using Ortho" << endl;
-   	}
+    changeView();
     glMatrixMode (GL_MODELVIEW);
 }
 
@@ -76,6 +117,9 @@ int main(int argc, char** argv) {
     myInit();
     glutDisplayFunc(display); 
     glutReshapeFunc(reshape);
+    glutMouseFunc(mouse);
+    glutKeyboardFunc(keyboard);
+    glutSpecialFunc(specialKeyboard);
 
     setupMenu();
 

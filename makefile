@@ -24,7 +24,8 @@ clean :
 	rm *.o
 
 pristine :
-	rm -f *.o 
+	rm -f *.o
+	rm -f *~
 	touch *.cpp
 
 ctags :

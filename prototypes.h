@@ -16,6 +16,11 @@ extern int winWidth, winHeight;
 extern int axisOn, fillOn, signOn;
 extern int viewMode;
 extern int customX, customY;
+extern float angle, spin;
+extern float zoom;
+
+//Debug
+extern float xT, yT, zT;
 
 void switchView (int msg);
 void showAxis (int msg);
@@ -29,6 +34,8 @@ void refresh();
 void reshape (int w, int h);
 void drawSign();
 void drawHouse();
+void changeView();
+void spinHouse();
 
 typedef struct vertex {
     float x;
@@ -49,7 +56,7 @@ typedef struct house4 {
 } house4;
 
 typedef struct house5 {
-    vertex point[4];
+    vertex point[5];
     colortype color;	
 } house5;
 
