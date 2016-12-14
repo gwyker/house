@@ -18,10 +18,18 @@ void switchView (int msg) { //Switches between views
 		case 3: //Custom
 			viewMode = 3;
 			//Choose custom settings
-			cout << "Enter 1st parameter: ";
-			cin >> customX;
-			cout << "Enter 2nd parameter: ";
-			cin >> customY;
+			cout << "Enter left clipping plane: ";
+			cin >> customLeft;
+			cout << "Enter right clipping plane: ";
+			cin >> customRight;
+			cout << "Enter bottom clipping plane: ";
+			cin >> customBottom;
+			cout << "Enter top clipping plane: ";
+			cin >> customTop;
+			cout << "Enter near clipping distance: ";
+			cin >> customNear;
+			cout << "Enter far clipping distance: ";
+			cin >> customFar;
 			break;
 	}
 	cout << "viewmode = " << viewMode << endl;

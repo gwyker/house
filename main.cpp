@@ -21,12 +21,8 @@ void myGlutInit(int argc, char** argv){
 void myInit() {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClearDepth(1.0); //set depth
-	glEnable(GL_DEPTH_TEST); //enable z-buffer
-	glDepthFunc(GL_LESS); //depth test mode
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glMatrixMode(GL_MODELVIEW);
+    glEnable(GL_DEPTH_TEST); //enable z-buffer
+    glDepthFunc(GL_LESS); //depth test mode
 }
 
 void mouse(int button, int state, int x, int y) 

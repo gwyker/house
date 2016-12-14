@@ -3,6 +3,13 @@
 float spin = 0;
 float angle = 0;
 
+float customLeft = -1.0;
+float customRight = 1.0;
+float customBottom = -1.0;
+float customTop = 1.0;
+float customNear = 1.5;
+float customFar = 40.0;
+
 void display(void) {
     //struct house faces[7];
 
@@ -29,6 +36,7 @@ void display(void) {
     if (axisOn) drawAxes(50);
     
     changeView();
+    drawCurrentView();
     
     glFlush();
     glutPostRedisplay();
@@ -48,15 +56,20 @@ void changeView() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    if (viewMode == 1) {
-   	glFrustum(-1.0*zoom, 1.0*zoom, -1.0*zoom, 1.0*zoom, 1.5, 40.0);
-   	//cout << "reshape: viewmode = " << viewMode << endl;
-   	//cout << "reshape: using Frustum" << endl;
-    }
-    else {
-   	glOrtho(-1.0*(zoom + 13.0), 1.0*(zoom + 13.0), -1.0*(zoom + 13.0), 1.0*(zoom + 13.0), 1.5, 40.0);
-   	//cout << "reshape: viewmode = " << viewMode << endl;
-   	//cout << "reshape: using Ortho" << endl;
+    switch (viewMode) {
+    	case 1: //Perspective
+   		glFrustum(-1.0*zoom, 1.0*zoom, -1.0*zoom, 1.0*zoom, 1.5, 40.0);
+   		//cout << "reshape: viewmode = " << viewMode << endl;
+   		//cout << "reshape: using Frustum" << endl;
+   		break;
+   	case 2: //Orthographic
+   		glOrtho(-1.0*(zoom + 13.0), 1.0*(zoom + 13.0), -1.0*(zoom + 13.0), 1.0*(zoom + 13.0), 1.5, 40.0);
+   		//cout << "reshape: viewmode = " << viewMode << endl;
+   		//cout << "reshape: using Ortho" << endl;
+   		break;
+   	case 3: //Custom
+   		glFrustum(customLeft, customRight, customBottom, customTop, customNear, customFar);
+   		break;
     }
     
     glMatrixMode (GL_MODELVIEW);
@@ -88,7 +101,7 @@ void drawHouse() {
     faces4[2].point[2].x = -7; faces4[2].point[2].y = 5; faces4[2].point[2].z = 3; faces4[2].point[2].w = 1;
     faces4[2].point[3].x = -7; faces4[2].point[3].y = 0; faces4[2].point[3].z = 7; faces4[2].point[3].w = 1;
 
-    faces4[2].color.red = 0.0; faces4[2].color.green = 1.0; faces4[2].color.blue = 0.0; //green
+    faces4[2].color.red = 1.0; faces4[2].color.green = 0.41; faces4[2].color.blue = 0.705; //pink
 
     //left roof
     faces4[3].point[0].x = 7; faces4[3].point[0].y = -5; faces4[3].point[0].z = 3; faces4[3].point[0].w = 1;
@@ -122,7 +135,7 @@ void drawHouse() {
     faces5[1].point[3].x = -7; faces5[1].point[3].y = 0; faces5[1].point[3].z = 7; faces5[1].point[3].w = 1;
     faces5[1].point[4].x = -7; faces5[1].point[4].y = -5; faces5[1].point[4].z = 3; faces5[1].point[4].w = 1;
 
-    faces5[1].color.red = 1.0; faces5[1].color.green = 0.41; faces5[1].color.blue = 0.705; //pink
+    faces5[1].color.red = 0.0; faces5[1].color.green = 1.0; faces5[1].color.blue = 0.0; //green
 
     for (int i = 0;i < 7;i++) {
         if (i < 5) {
@@ -153,19 +166,82 @@ void drawHouse() {
     }
 }
 
+void drawCurrentView() { //Draws current viewmode in top right corner
+   int vPort[4];
+
+   glGetIntegerv(GL_VIEWPORT, vPort);
+
+   glMatrixMode(GL_PROJECTION);
+   glPushMatrix();
+   glLoadIdentity();
+
+   glOrtho(0, vPort[2], 0, vPort[3], -1, 1);
+   glMatrixMode(GL_MODELVIEW);
+   glPushMatrix();
+   glLoadIdentity();
+   
+   //draw code
+   int i, len;
+   char messageP[] = "Perspective ";
+   char messageO[] = "Orthographic";
+   char messageC[] = "Custom";
+   
+   void *font = GLUT_STROKE_ROMAN;
+    
+   glLineWidth(2);
+
+   glPushMatrix();
+   glColor3f(0.0,1.0,1.0);
+   glTranslatef(vPort[2] - 230, vPort[3] - 50, 0);
+   //glRotatef(135.0 + 10, 1.0, 0.0, 0.0);
+   //glRotatef(180.0, 0.0, 1.0, 0.0);
+   glScalef(0.3*zoom,0.3*zoom,0.3*zoom);
+   switch (viewMode) {
+   	case 1:
+   		len = (int) strlen(messageP);
+   		for (i = 0; i < len; i++) {
+      			glutStrokeCharacter(font, messageP[i]);
+  		}
+  		cout << "drawing perspective\n";
+   		break;
+   	case 2:
+   		len = (int) strlen(messageO);
+   		for (i = 0; i < len; i++) {
+      			glutStrokeCharacter(font, messageO[i]);
+  		}
+   		break;
+   	case 3:
+   		len = (int) strlen(messageC);
+   		for (i = 0; i < len; i++) {
+      			glutStrokeCharacter(font, messageC[i]);
+  		}   		
+   		break;
+   }
+   glPopMatrix();
+   
+
+   glMatrixMode(GL_PROJECTION);
+   glPopMatrix();   
+   glMatrixMode(GL_MODELVIEW);
+   glPopMatrix();	
+
+}
+
 void drawSign() {
     int i, len;
     char message1[] = "Hello";
     char message2[] = "World!";
 
     void *font = GLUT_STROKE_ROMAN;
+    
+    glLineWidth(4);
 
     glPushMatrix();
-    glColor3f(1.0,0.0,0.0);
-    glTranslatef(5.5 + xT, 2.5 + yT, 5.5 + zT);
+    glColor3f(0.0,1.0,1.0);
+    glTranslatef(5.5 + xT, 2.8 + yT, 5.2 + zT);
     glRotatef(135.0 + 10, 1.0, 0.0, 0.0);
     glRotatef(180.0, 0.0, 1.0, 0.0);
-    glScalef(0.03,0.03,0.03);
+    glScalef(0.03*zoom,0.03*zoom,0.03*zoom);
     len = (int) strlen(message1);
     for (i = 0; i < len; i++) {
         glutStrokeCharacter(font, message1[i]);
@@ -174,11 +250,11 @@ void drawSign() {
 
 
     glPushMatrix();
-    glColor3f(1.0,0.0,0.0);
-    glTranslatef(5.5 + xT, 2.5 + yT + 2.0, 5.5 + zT - 2.0);
-    glRotatef(135.0 + 8, 1.0, 0.0, 0.0);
+    glColor3f(0.0,1.0,1.0);
+    glTranslatef(5.5 + xT, 2.8 + yT + 2.0, 5.2 + zT - 2.0);
+    glRotatef(135.0 + 7, 1.0, 0.0, 0.0);
     glRotatef(180.0, 0.0, 1.0, 0.0);
-    glScalef(0.03,0.03,0.03);
+    glScalef(0.03*zoom,0.03*zoom,0.03*zoom);
     len = (int) strlen(message2);
     for (i = 0; i < len; i++) {
         glutStrokeCharacter(font, message2[i]);
@@ -198,6 +274,8 @@ void drawAxes(int length) {
 
     // Select the Stroke font we want to use
     void *font = GLUT_STROKE_ROMAN;
+    
+    glLineWidth(2);
 
     // This provides a coordinate axis about the origin. 
     glPointSize(1.0);

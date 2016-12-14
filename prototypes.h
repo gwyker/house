@@ -15,7 +15,7 @@ using namespace std;
 extern int winWidth, winHeight;
 extern int axisOn, fillOn, signOn;
 extern int viewMode;
-extern int customX, customY;
+extern float customLeft, customRight, customBottom, customTop, customNear, customFar;
 extern float angle, spin;
 extern float zoom;
 
@@ -36,6 +36,7 @@ void drawSign();
 void drawHouse();
 void changeView();
 void spinHouse();
+void drawCurrentView();
 
 typedef struct vertex {
     float x;
